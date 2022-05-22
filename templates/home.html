@@ -1,0 +1,257 @@
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="styleCss.css"> -->
+    <link rel="shortcut icon" href="https://img.icons8.com/pastel-glyph/344/coronavirus--v3.png" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleCss.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    <h1 class="page-title">Covid Tracker</h1>
+    <!-- For All country -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body hovereffectRed">
+                        <h5 class="card-title">Today Coronavirus Cases</h5>
+                        <p class="card-text">{{ jsonsent["todayCases"] }}</p>
+                        <!-- caseinStatus,deathinStatus,recovinstatus -->
+                            {% if caseinStatus %}
+                                <i class="fa fa-arrow-up"></i>
+                            {% else %}
+                                <i class="fa fa-arrow-down"></i>
+                            {% endif %}
+                        <!-- <i class="fa fa-arrow-up"></i> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body hovereffectGreen">
+                    <h5 class="card-title">Today Recovered Cases</h5>
+                    <p class="card-text">{{ jsonsent["todayRecovered"] }}</p>
+                    {% if recovinstatus %}
+                        <i class="fa fa-arrow-up"></i>
+                    {% else %}
+                        <i class="fa fa-arrow-down"></i>
+                    {% endif %}
+                    <!-- <i class="fa fa-arrow-up"></i> -->
+                </div>
+            </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body hovereffectDarkRed">
+                        <h5 class="card-title">Today Death Cases</h5>
+                        <p class="card-text">{{ jsonsent["todayDeaths"] }}</p>
+                        {% if deathinStatus %}
+                            <i class="fa fa-arrow-up"></i>
+                        {% else %}
+                            <i class="fa fa-arrow-down"></i>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Coronavirus Cases</h5>
+                        <p class="card-text">{{ jsonsent["cases"] }}</p>
+                        <p>Table of Cases</p>
+                        <div class="tableDiv">
+                            <table class="card-table table">
+                                <!-- <tbody> -->
+                                {% for i,j in casesDict.items() %}
+                                    <tr>
+                                        <td>{{ i }}</td>
+                                        <td>{{ j }}</td>
+                                    </tr>
+                                {% endfor %}
+                                <!-- </tbody> -->
+                        </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Recovered Cases</h5>
+                    <p class="card-text">{{ jsonsent["recovered"] }}</p>
+                    <p>Table of Recoverd cases</p>
+                    <div class="tableDiv">
+                        <table class="card-table table">
+                            {% for i,j in recoveredDict.items() %}
+                            <tr>
+                                <td>{{ i }}</td>
+                                <td>{{ j }}</td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                      </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Death Cases</h5>
+                        <p class="card-text">{{ jsonsent["deaths"] }}</p>
+                        <p>Table of Death Cases</p>
+                        <div class="tableDiv">
+                            <table class="card-table table">
+                            {% for i,j in deathDict.items() %}
+                                <tr>
+                                    <td>{{ i }}</td>
+                                    <td>{{ j }}</td>
+                                </tr>
+                            {% endfor %}
+                          </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+            <div class="card hovereffectRed">
+                <div class="card-body ">
+                <h5 class="card-title">Total Active Case</h5>
+                <p class="card-text">{{ jsonsent["active"] }}</p>
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="card hovereffectRed">
+                <div class="card-body">
+                <h5 class="card-title">Critical Case</h5>
+                <p class="card-text">{{ jsonsent["critical"] }}</p>
+                </div>
+            </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container col-sm-4">
+        <form action="{{url_for('getdata')}}" method="post">
+            <div class="filter__section">
+                <select  class="form-select" aria-label="Default select example" name="countrySelect">
+                    <option selected>{{display_country}}</option>
+                    {% for country in country_list_json %}
+                        <option value="{{country['countryInfo']['iso2']}}">{{country["country"]}}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" class="btn btn-primary"  value="Go">
+            </div>
+        </form>
+    </div>
+
+
+    {% if filterStatus %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                <div class="card hovereffectRed">
+                    <div class="card-body">
+                    <h5 class="card-title">Cases</h5>
+                    <p class="card-text">{{ country_json_specific["todayCases"] }}</p>
+                    </div>
+                </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card hovereffectGreen">
+                    <div class="card-body">
+                        <h5 class="card-title">Recoverd</h5>
+                        <p class="card-text">{{ country_json_specific["todayDeaths"] }}</p>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                <div class="card hovereffectRed">
+                    <div class="card-body">
+                    <h5 class="card-title">Deaths</h5>
+                    <p class="card-text">{{ country_json_specific["todayRecovered"] }}</p>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                <div class="card hovereffectRed">
+                    <div class="card-body">
+                    <h5 class="card-title">Total Cases</h5>
+                    <p class="card-text">{{ country_json_specific["cases"] }}</p>
+                    </div>
+                </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card hovereffectGreen">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Recoverd</h5>
+                        <p class="card-text">{{ country_json_specific["recovered"] }}</p>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                <div class="card hovereffectRed">
+                    <div class="card-body">
+                    <h5 class="card-title">Total Deaths</h5>
+                    <p class="card-text">{{ country_json_specific["deaths"] }}</p>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body hovereffectRed">
+                    <h5 class="card-title">Active Case</h5>
+                    <p class="card-text">{{ country_json_specific["active"] }}</p>
+                    </div>
+                </div>
+                </div>
+                <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body hovereffectRed">
+                    <h5 class="card-title">Critical Case</h5>
+                    <p class="card-text">{{ country_json_specific["deaths"] }}</p>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+        </div>
+    {% else %}
+        
+    {% endif %}
+
+
+
+
+    <div class="footer">
+
+    </div>
+
+      
+</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</html>

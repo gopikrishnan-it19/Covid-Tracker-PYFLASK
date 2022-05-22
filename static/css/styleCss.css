@@ -1,0 +1,105 @@
+.container
+{
+    margin-top: 20px;
+}
+
+.card{
+    margin-top: 35px;
+    cursor: pointer;
+}
+
+
+.card:hover
+{
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+
+
+.fa
+{
+    transform: rotate(45deg);
+    font-size:48px
+}
+
+.tableDiv
+{
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.table {
+    margin-top: 20px;
+    overflow: scroll;
+    color: #6a5d5d;
+    background-color: white;
+    height: 400px; 
+    overflow-y: scroll; 
+}
+  
+.table tr {
+    display: flex;
+    justify-content: space-between;
+}
+  
+.table td {
+    padding: 0.5rem;
+    border: none;
+}
+  
+.table tr:nth-of-type(odd) {
+    background-color: #f3f2f8;
+}
+
+.hovereffectRed:hover
+{
+    color:red
+}
+
+.hovereffectGreen:hover
+{
+    color: rgb(20, 229, 20);
+}
+
+
+
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+.page-title
+{
+    padding-left: 40px;
+    padding-top: 50px;
+}
+
+.footer
+{
+    padding-bottom: 20px;
+}
+
+.title-Test
+{
+    color:green;
+}
+
+.filter__section
+{
+    display: flex;
+}
+
+.hovereffectDarkRed:hover{
+    color: #B20600;
+}
